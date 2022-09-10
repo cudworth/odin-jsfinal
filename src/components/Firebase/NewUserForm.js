@@ -1,0 +1,63 @@
+import "./NewUserForm.css";
+
+import { useState } from "react";
+import { setStateHelper } from "../../library";
+
+function NewUserForm(props) {
+  const [state, setState] = useState({
+    email: "",
+    password: "",
+    vfyPassword: "",
+  });
+  const { onSubmit } = { ...props };
+
+  return (
+    <form className="NewUserForm">
+      <label>
+        Email
+        <input
+          type="email"
+          value={state.email}
+          onChange={(e) => {
+            setStateHelper(setState, { email: e.target.value });
+          }}
+        />
+      </label>
+      <label>
+        Password
+        <input
+          type="password"
+          value={state.password}
+          onChange={(e) => {
+            setStateHelper(setState, { password: e.target.value });
+          }}
+        />
+      </label>
+      <label>
+        Verify Password
+        <input
+          type="password"
+          value={state.vfyPassword}
+          onChange={(e) => {
+            setStateHelper(setState, { vfyPassword: e.target.value });
+          }}
+        />
+      </label>
+      <input
+        type="submit"
+        value="Submit"
+        onClick={(e) => {
+          e.preventDefault();
+          if (state.password === state.vfyPassword) {
+            onSubmit({ email: state.email, password: state.password });
+          } else {
+            //implement notice
+            console.log("passwords do not match");
+          }
+        }}
+      />
+    </form>
+  );
+}
+
+export { NewUserForm };
