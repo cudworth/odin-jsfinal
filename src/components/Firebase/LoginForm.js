@@ -5,7 +5,7 @@ import { setStateHelper } from "../../library";
 
 function LoginForm(props) {
   const [state, setState] = useState({ email: "", password: "" });
-  const { onSubmit } = { ...props };
+  const { onSubmit, onEscape } = { ...props };
 
   return (
     <form className="LoginForm">
@@ -35,6 +35,13 @@ function LoginForm(props) {
         onClick={(e) => {
           e.preventDefault();
           onSubmit({ email: state.email, password: state.password });
+        }}
+      />
+      <input
+        type="button"
+        value="Cancel"
+        onClick={(e) => {
+          onEscape();
         }}
       />
     </form>

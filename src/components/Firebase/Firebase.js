@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { useState } from "react";
-import { setStateHelper } from "../../library";
+import { setStateHelper, logError } from "../../library";
 
 import { firebaseConfig } from "./firebase-key";
 
@@ -14,6 +14,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
+  signOut,
 } from "firebase/auth";
 
 // Initialize Firebase
@@ -22,34 +23,86 @@ const auth = getAuth(app);
 const analytics = getAnalytics(app);
 
 function Firebase() {
-  const [state, setState] = useState({ user: null });
+  const [state, setState] = useState({
+    user: null,
+    NewUserForm: false,
+    LoginForm: false,
+  });
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/firebase.User
       const uid = user.uid;
-      setStateHelper(setState, { user: uid });
+      //setStateHelper(setState, { user: uid });
     } else {
       // User is signed out
-      setStateHelper(setState, { user: null });
+      //setStateHelper(setState, { user: null });
     }
   });
 
   if (state.user) {
+    return renderAuth();
+  } else {
+    return renderNoAuth();
+  }
+
+  function renderNoAuth() {
+    if (state.NewUserForm) {
+      return (
+        <div>
+          <NewUserForm
+            onSubmit={createUser}
+            onEscape={() =>
+              setStateHelper(setState, { LoginForm: null, NewUserForm: null })
+            }
+          />
+        </div>
+      );
+    }
+    if (state.LoginForm) {
+      return (
+        <div>
+          <LoginForm
+            onSubmit={signIn}
+            onEscape={() =>
+              setStateHelper(setState, { LoginForm: null, NewUserForm: null })
+            }
+          />
+        </div>
+      );
+    }
+    return (
+      <div className="Firebase">
+        <input
+          type="button"
+          value="Sign In"
+          onClick={(e) => {
+            setStateHelper(setState, { LoginForm: true, NewUserForm: false });
+          }}
+        />
+        <input
+          type="button"
+          value="Register"
+          onClick={(e) => {
+            setStateHelper(setState, { NewUserForm: true, LoginForm: false });
+          }}
+        />
+      </div>
+    );
+  }
+
+  function renderAuth() {
     return (
       <div className="Firebase">
         <div>Logged in as {state.user}</div>
-        <input type="button" value="Sign Out" />
-      </div>
-    );
-  } else {
-    return (
-      <div className="Firebase">
-        <input type="button" value="Sign In" />
-        <input type="button" value="Register" />
-        <NewUserForm onSubmit={createUser} />
-        <LoginForm onSubmit={signIn} />
+        <input
+          type="button"
+          value="Sign Out"
+          onClick={(e) => {
+            signUserOut();
+          }}
+        />
       </div>
     );
   }
@@ -62,13 +115,12 @@ function Firebase() {
         const user = userCredential.user;
         console.log(`User: ${user}`);
         console.log(`User ID: ${user.uid}`);
+        setStateHelper(setState, { NewUserForm: false, user: user.uid });
+
         // ...
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(`Error code: ${errorCode}`);
-        console.log(`Error message: ${errorMessage}`);
+        logError(error);
         // ..
       });
   }
@@ -81,13 +133,22 @@ function Firebase() {
         const user = userCredential.user;
         console.log(`User: ${user}`);
         console.log(`User ID: ${user.uid}`);
+        setStateHelper(setState, { LoginForm: false, user: user.uid });
         // ...
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(`Error code: ${errorCode}`);
-        console.log(`Error message: ${errorMessage}`);
+        logError(error);
+      });
+  }
+
+  function signUserOut() {
+    signOut(auth)
+      .then(() => {
+        console.log("Signed user out");
+        setStateHelper(setState, { user: null });
+      })
+      .catch((error) => {
+        logError(error);
       });
   }
 }

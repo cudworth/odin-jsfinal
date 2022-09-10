@@ -9,7 +9,7 @@ function NewUserForm(props) {
     password: "",
     vfyPassword: "",
   });
-  const { onSubmit } = { ...props };
+  const { onSubmit, onEscape } = { ...props };
 
   return (
     <form className="NewUserForm">
@@ -54,6 +54,13 @@ function NewUserForm(props) {
             //implement notice
             console.log("passwords do not match");
           }
+        }}
+      />
+      <input
+        type="button"
+        value="Cancel"
+        onClick={(e) => {
+          onEscape();
         }}
       />
     </form>

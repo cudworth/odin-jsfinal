@@ -3,9 +3,17 @@ function setStateHelper(fn, obj) {
     const next = { ...prev };
     Object.keys(obj).forEach((key) => {
       next[key] = obj[key];
+      //console.log(`setStateHelper is setting ${key} to value: ${obj[key]}`);
     });
     return next;
   });
 }
 
-export { setStateHelper };
+function logError(error) {
+  const errorCode = error.code;
+  const errorMessage = error.message;
+  console.log(`Error code: ${errorCode}`);
+  console.log(`Error message: ${errorMessage}`);
+}
+
+export { setStateHelper, logError };
