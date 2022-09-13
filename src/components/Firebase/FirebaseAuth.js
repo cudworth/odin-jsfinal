@@ -1,8 +1,10 @@
+import "./FirebaseAuth.css";
+
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { useState } from "react";
-import { setStateHelper, logError } from "../../library";
+import { setStateHelper } from "../../library";
 
 import { firebaseConfig } from "./firebase-key";
 
@@ -22,18 +24,21 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const analytics = getAnalytics(app);
 
-function Firebase() {
+function FirebaseAuth(props) {
+  const { onError } = { ...props };
+
   const [state, setState] = useState({
     user: null,
     NewUserForm: false,
     LoginForm: false,
   });
 
+  //REQUIRES IMPLEMENTATION - SETSTATE CAUSES A LOOP IN THIS CFG
   onAuthStateChanged(auth, (user) => {
     if (user) {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/firebase.User
-      const uid = user.uid;
+      //const uid = user.uid;
       //setStateHelper(setState, { user: uid });
     } else {
       // User is signed out
@@ -73,7 +78,7 @@ function Firebase() {
       );
     }
     return (
-      <div className="Firebase">
+      <div className="FirebaseAuth">
         <input
           type="button"
           value="Sign In"
@@ -94,7 +99,7 @@ function Firebase() {
 
   function renderAuth() {
     return (
-      <div className="Firebase">
+      <div className="FirebaseAuth">
         <div>Logged in as {state.user}</div>
         <input
           type="button"
@@ -120,7 +125,7 @@ function Firebase() {
         // ...
       })
       .catch((error) => {
-        logError(error);
+        onError(error);
         // ..
       });
   }
@@ -137,7 +142,7 @@ function Firebase() {
         // ...
       })
       .catch((error) => {
-        logError(error);
+        onError(error);
       });
   }
 
@@ -148,9 +153,9 @@ function Firebase() {
         setStateHelper(setState, { user: null });
       })
       .catch((error) => {
-        logError(error);
+        onError(error);
       });
   }
 }
 
-export { Firebase };
+export { FirebaseAuth };

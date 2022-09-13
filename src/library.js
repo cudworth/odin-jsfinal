@@ -3,7 +3,6 @@ function setStateHelper(fn, obj) {
     const next = { ...prev };
     Object.keys(obj).forEach((key) => {
       next[key] = obj[key];
-      //console.log(`setStateHelper is setting ${key} to value: ${obj[key]}`);
     });
     return next;
   });
