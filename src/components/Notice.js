@@ -5,17 +5,19 @@ function Notice(props) {
 
   if (message instanceof Error) {
     return (
-      <div className="Notice">
-        <div>{`Error Code: ${message.code}`}</div>
-        <div>{`Error Message: ${message.message}`}</div>
-        <input type="button" value="Okay" onClick={onClick} />
+      <div className="Notice" onClick={onClick}>
+        <div className="Notice-card">
+          <div>{`Error Code: ${message.code}`}</div>
+          <div>{`Error Message: ${message.message}`}</div>
+        </div>
       </div>
     );
   } else if (message != null) {
     return (
-      <div className="Notice">
-        <div>{message}</div>
-        <input type="button" value="Okay" onClick={onClick} />
+      <div className="Notice" onClick={onClick}>
+        <div className="Notice-card">
+          <div>{message}</div>
+        </div>
       </div>
     );
   } else {

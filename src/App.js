@@ -5,7 +5,7 @@ import { useState } from "react";
 import { setStateHelper } from "./library";
 
 function App() {
-  const [state, setState] = useState({ notice: "Hello world!" });
+  const [state, setState] = useState({ notice: null });
 
   return (
     <div className="App">
