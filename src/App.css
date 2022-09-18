@@ -1,4 +1,14 @@
 .App {
-  text-align: center;
-  background-color: salmon;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  height: 100vh;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.App-body {
+  background-color: chartreuse;
+  flex-grow: 1;
 }
