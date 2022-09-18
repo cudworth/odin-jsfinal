@@ -1,7 +1,7 @@
 import "./LoginForm.css";
 
 import { useState } from "react";
-import { setStateHelper } from "../../library";
+import { stateHelper } from "../library";
 
 function LoginForm(props) {
   const [state, setState] = useState({ email: "", password: "" });
@@ -15,7 +15,7 @@ function LoginForm(props) {
           type="email"
           value={state.email}
           onChange={(e) => {
-            setStateHelper(setState, { email: e.target.value });
+            stateHelper(setState, { email: e.target.value });
           }}
         />
       </label>
@@ -25,7 +25,7 @@ function LoginForm(props) {
           type="password"
           value={state.password}
           onChange={(e) => {
-            setStateHelper(setState, { password: e.target.value });
+            stateHelper(setState, { password: e.target.value });
           }}
         />
       </label>

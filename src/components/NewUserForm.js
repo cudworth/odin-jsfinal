@@ -1,7 +1,7 @@
 import "./NewUserForm.css";
 
 import { useState } from "react";
-import { setStateHelper } from "../../library";
+import { stateHelper } from "../library";
 
 function NewUserForm(props) {
   const [state, setState] = useState({
@@ -19,7 +19,7 @@ function NewUserForm(props) {
           type="email"
           value={state.email}
           onChange={(e) => {
-            setStateHelper(setState, { email: e.target.value });
+            stateHelper(setState, { email: e.target.value });
           }}
         />
       </label>
@@ -29,7 +29,7 @@ function NewUserForm(props) {
           type="password"
           value={state.password}
           onChange={(e) => {
-            setStateHelper(setState, { password: e.target.value });
+            stateHelper(setState, { password: e.target.value });
           }}
         />
       </label>
@@ -39,7 +39,7 @@ function NewUserForm(props) {
           type="password"
           value={state.vfyPassword}
           onChange={(e) => {
-            setStateHelper(setState, { vfyPassword: e.target.value });
+            stateHelper(setState, { vfyPassword: e.target.value });
           }}
         />
       </label>

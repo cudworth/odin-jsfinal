@@ -1,5 +1,5 @@
-function setStateHelper(fn, obj) {
-  fn((prev) => {
+function stateHelper(setStateFn, obj) {
+  setStateFn((prev) => {
     const next = { ...prev };
     Object.keys(obj).forEach((key) => {
       next[key] = obj[key];
@@ -15,4 +15,4 @@ function logError(error) {
   console.log(`Error message: ${errorMessage}`);
 }
 
-export { setStateHelper, logError };
+export { stateHelper, logError };
