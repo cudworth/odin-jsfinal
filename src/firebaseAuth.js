@@ -1,6 +1,5 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { firebaseConfig } from "./firebase-key";
 
 import {
@@ -9,17 +8,18 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 
 function firebaseAuth(props) {
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
-  const analytics = getAnalytics(app);
 
   function addAuthStateListener(fn) {
     onAuthStateChanged(auth, (user) => {
       fn(user);
+      /*
       if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
@@ -29,17 +29,19 @@ function firebaseAuth(props) {
         // User is signed out
         console.log("User signed out per authstatechange listener");
       }
+      */
     });
   }
 
   function createUser(args) {
-    const { email, password } = { ...args };
+    const { email, password, displayName } = { ...args };
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
         console.log(`User: ${user}`);
         console.log(`User ID: ${user.uid}`);
+        updateProfile(auth.currentUser, { displayName });
         // ...
       })
       .catch((error) => {

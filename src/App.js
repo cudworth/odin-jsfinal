@@ -11,14 +11,14 @@ const auth = firebaseAuth();
 
 function App() {
   const [state, setState] = useState({
-    auth: null,
+    user: null,
     notice: null,
     activeForm: null,
   });
 
   useEffect(() => {
     auth.addAuthStateListener((user) => {
-      stateHelper(setState, { auth: user ? true : false });
+      stateHelper(setState, { user: user ? user : null });
     });
   }, []);
 
@@ -26,7 +26,7 @@ function App() {
     <div className="App">
       <Notice message={state.notice} onClick={clearNotice} />
       <Navbar
-        authState={state.auth}
+        user={state.user}
         onClickRegister={renderNewUserForm}
         onClickSignIn={renderLoginForm}
         onClickSignOut={signOut}

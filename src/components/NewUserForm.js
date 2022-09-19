@@ -8,11 +8,22 @@ function NewUserForm(props) {
     email: "",
     password: "",
     vfyPassword: "",
+    displayName: "",
   });
   const { onSubmit, onEscape } = { ...props };
 
   return (
     <form className="NewUserForm">
+      <label>
+        Display Name:
+        <input
+          type="text"
+          value={state.displayName}
+          onChange={(e) => {
+            stateHelper(setState, { displayName: e.target.value });
+          }}
+        />
+      </label>
       <label>
         Email
         <input
@@ -48,11 +59,20 @@ function NewUserForm(props) {
         value="Submit"
         onClick={(e) => {
           e.preventDefault();
-          if (state.password === state.vfyPassword) {
-            onSubmit({ email: state.email, password: state.password });
+          if (
+            state.password === state.vfyPassword &&
+            state.email &&
+            state.password &&
+            state.displayName
+          ) {
+            onSubmit({
+              displayName: state.displayName,
+              email: state.email,
+              password: state.password,
+            });
           } else {
             //implement notice
-            console.log("passwords do not match");
+            console.log("Input error");
           }
         }}
       />

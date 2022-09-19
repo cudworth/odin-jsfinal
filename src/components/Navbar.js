@@ -1,13 +1,14 @@
 import "./Navbar.css";
 
 function Navbar(props) {
-  const { authState, onClickRegister, onClickSignIn, onClickSignOut } = {
+  const { user, onClickRegister, onClickSignIn, onClickSignOut } = {
     ...props,
   };
 
-  const authBar = authState ? (
+  const userInfo = user ? (
     <div>
-      <div>Logged in as {"user?"}</div>
+      <div>{user.displayName}</div>
+      <div>{user.email}</div>
       <input type="button" value="Sign Out" onClick={onClickSignOut} />
     </div>
   ) : (
@@ -20,7 +21,7 @@ function Navbar(props) {
   return (
     <div className="Navbar">
       <div>Purdy Project</div>
-      {authBar}
+      {userInfo}
     </div>
   );
 }
