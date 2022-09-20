@@ -1,11 +1,11 @@
 import "./LoginForm.css";
 
 import { useState } from "react";
-import { stateHelper } from "../library";
+import { stateHelper } from "../../library";
 
 function LoginForm(props) {
   const [state, setState] = useState({ email: "", password: "" });
-  const { onSubmit, onEscape } = { ...props };
+  const { onSubmit, onEscape } = props;
 
   return (
     <form className="LoginForm">

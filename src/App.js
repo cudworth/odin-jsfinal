@@ -2,10 +2,8 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import { stateHelper } from "./library";
 import { firebaseAuth } from "./firebaseAuth";
-import { Navbar } from "./components/Navbar";
-import { NewUserForm } from "./components/NewUserForm";
-import { LoginForm } from "./components/LoginForm";
 import { Notice } from "./components/Notice";
+import { Body } from "./components/Body";
 
 const auth = firebaseAuth();
 
@@ -13,7 +11,6 @@ function App() {
   const [state, setState] = useState({
     user: null,
     notice: null,
-    activeForm: null,
   });
 
   useEffect(() => {
@@ -25,15 +22,7 @@ function App() {
   return (
     <div className="App">
       <Notice message={state.notice} onClick={clearNotice} />
-      <Navbar
-        user={state.user}
-        onClickRegister={renderNewUserForm}
-        onClickSignIn={renderLoginForm}
-        onClickSignOut={signOut}
-        onError={setNotice}
-      />
-      <div className="App-body">Body</div>
-      {state.activeForm}
+      <Body auth={auth} user={state.user} onError={setNotice} />
     </div>
   );
 
@@ -42,36 +31,6 @@ function App() {
   }
   function clearNotice() {
     stateHelper(setState, { notice: null });
-  }
-
-  function renderNewUserForm() {
-    stateHelper(setState, {
-      activeForm: (
-        <NewUserForm
-          onSubmit={(args) => {
-            auth.createUser(args);
-            stateHelper(setState, { activeForm: null });
-          }}
-          onEscape={() => stateHelper(setState, { activeForm: null })}
-        />
-      ),
-    });
-  }
-  function renderLoginForm() {
-    stateHelper(setState, {
-      activeForm: (
-        <LoginForm
-          onSubmit={(args) => {
-            auth.signUserIn(args);
-            stateHelper(setState, { activeForm: null });
-          }}
-          onEscape={() => stateHelper(setState, { activeForm: null })}
-        />
-      ),
-    });
-  }
-  function signOut() {
-    auth.signUserOut();
   }
 }
 

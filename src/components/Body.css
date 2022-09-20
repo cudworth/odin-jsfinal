@@ -1,0 +1,19 @@
+.Contents {
+  background-color: chartreuse;
+  flex-grow: 1;
+}
+
+.Body {
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  height: 100vh;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.Contents {
+  background-color: chartreuse;
+  flex-grow: 1;
+}

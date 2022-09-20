@@ -1,7 +1,7 @@
 import "./NewUserForm.css";
 
 import { useState } from "react";
-import { stateHelper } from "../library";
+import { stateHelper } from "../../library";
 
 function NewUserForm(props) {
   const [state, setState] = useState({
@@ -10,7 +10,7 @@ function NewUserForm(props) {
     vfyPassword: "",
     displayName: "",
   });
-  const { onSubmit, onEscape } = { ...props };
+  const { onSubmit, onEscape } = props;
 
   return (
     <form className="NewUserForm">

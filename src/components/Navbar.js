@@ -1,7 +1,7 @@
 import "./Navbar.css";
 
 function Navbar(props) {
-  const { user, onClickRegister, onClickSignIn, onClickSignOut } = {
+  const { user, onClickSignIn, onClickSignOut } = {
     ...props,
   };
 
@@ -14,13 +14,12 @@ function Navbar(props) {
   ) : (
     <div>
       <input type="button" value="Sign In" onClick={onClickSignIn} />
-      <input type="button" value="Register" onClick={onClickRegister} />
     </div>
   );
 
   return (
     <div className="Navbar">
-      <div>Purdy Project</div>
+      <div>Fishing Journal</div>
       {userInfo}
     </div>
   );
