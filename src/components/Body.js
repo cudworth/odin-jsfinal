@@ -1,6 +1,6 @@
 import "./Body.css";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Navbar } from "./Navbar";
 import { Login } from "./Login";
@@ -11,10 +11,16 @@ function Body(props) {
 
   const [state, setState] = useState("");
 
+  useEffect(() => {
+    auth.addAuthStateListener((user) => {
+      setState(user ? "Profile" : "");
+    });
+  }, [auth]);
+
   function render() {
     switch (state) {
       case "Login":
-        return <Login />;
+        return <Login auth={auth} />;
       case "Maps":
         return <div>Maps</div>;
       case "Journal":
@@ -29,9 +35,12 @@ function Body(props) {
   return (
     <div className="Body">
       <Navbar
-        user={state.user}
-        onClickSignIn={() => setState("Login")}
-        onClickSignOut={auth.signUserOut}
+        user={user}
+        gotoSignIn={() => setState("Login")}
+        gotoSignOut={auth.signUserOut}
+        gotoMaps={() => setState("Maps")}
+        gotoJournal={() => setState("Journal")}
+        gotoProfile={() => setState("Profile")}
         onError={onError}
       />
       <div className="Contents">{render()}</div>

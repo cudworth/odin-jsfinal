@@ -1,47 +1,46 @@
 import "./LoginForm.css";
 
 import { useState } from "react";
-import { stateHelper } from "../../library";
 
 function LoginForm(props) {
-  const [state, setState] = useState({ email: "", password: "" });
-  const { onSubmit, onEscape } = props;
+  const { auth } = props;
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   return (
     <form className="LoginForm">
-      <label>
-        Email
-        <input
-          type="email"
-          value={state.email}
-          onChange={(e) => {
-            stateHelper(setState, { email: e.target.value });
-          }}
-        />
-      </label>
-      <label>
-        Password
-        <input
-          type="password"
-          value={state.password}
-          onChange={(e) => {
-            stateHelper(setState, { password: e.target.value });
-          }}
-        />
-      </label>
+      <div>
+        <label>
+          Email
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          Password
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
+        </label>
+      </div>
+
       <input
         type="submit"
         value="Submit"
         onClick={(e) => {
           e.preventDefault();
-          onSubmit({ email: state.email, password: state.password });
-        }}
-      />
-      <input
-        type="button"
-        value="Cancel"
-        onClick={(e) => {
-          onEscape();
+          auth.signUserIn({ email, password });
         }}
       />
     </form>

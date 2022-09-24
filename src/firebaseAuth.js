@@ -19,17 +19,6 @@ function firebaseAuth(props) {
   function addAuthStateListener(fn) {
     onAuthStateChanged(auth, (user) => {
       fn(user);
-      /*
-      if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        const uid = user.uid;
-        console.log(`User signed in: ${uid}`);
-      } else {
-        // User is signed out
-        console.log("User signed out per authstatechange listener");
-      }
-      */
     });
   }
 
@@ -39,7 +28,6 @@ function firebaseAuth(props) {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        console.log(`User: ${user}`);
         console.log(`User ID: ${user.uid}`);
         updateProfile(auth.currentUser, { displayName });
         // ...
@@ -56,7 +44,6 @@ function firebaseAuth(props) {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        console.log(`User: ${user}`);
         console.log(`User ID: ${user.uid}`);
         // ...
       })
