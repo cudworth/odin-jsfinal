@@ -1,16 +1,14 @@
 import "./NewUserForm.css";
 
 import { useState } from "react";
-import { stateHelper } from "../../library";
 
 function NewUserForm(props) {
-  const [state, setState] = useState({
-    email: "",
-    password: "",
-    vfyPassword: "",
-    displayName: "",
-  });
-  const { onSubmit, onEscape } = props;
+  const { auth, onCancel } = props;
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [vfyPassword, setVfyPassword] = useState("");
+  const [displayName, setDisplayName] = useState("");
 
   return (
     <form className="NewUserForm">
@@ -18,9 +16,9 @@ function NewUserForm(props) {
         Display Name:
         <input
           type="text"
-          value={state.displayName}
+          value={displayName}
           onChange={(e) => {
-            stateHelper(setState, { displayName: e.target.value });
+            setDisplayName(e.target.value);
           }}
         />
       </label>
@@ -28,9 +26,9 @@ function NewUserForm(props) {
         Email
         <input
           type="email"
-          value={state.email}
+          value={email}
           onChange={(e) => {
-            stateHelper(setState, { email: e.target.value });
+            setEmail(e.target.value);
           }}
         />
       </label>
@@ -38,9 +36,9 @@ function NewUserForm(props) {
         Password
         <input
           type="password"
-          value={state.password}
+          value={password}
           onChange={(e) => {
-            stateHelper(setState, { password: e.target.value });
+            setPassword(e.target.value);
           }}
         />
       </label>
@@ -48,9 +46,9 @@ function NewUserForm(props) {
         Verify Password
         <input
           type="password"
-          value={state.vfyPassword}
+          value={vfyPassword}
           onChange={(e) => {
-            stateHelper(setState, { vfyPassword: e.target.value });
+            setVfyPassword(e.target.value);
           }}
         />
       </label>
@@ -59,17 +57,8 @@ function NewUserForm(props) {
         value="Submit"
         onClick={(e) => {
           e.preventDefault();
-          if (
-            state.password === state.vfyPassword &&
-            state.email &&
-            state.password &&
-            state.displayName
-          ) {
-            onSubmit({
-              displayName: state.displayName,
-              email: state.email,
-              password: state.password,
-            });
+          if (password === vfyPassword && email && password && displayName) {
+            auth.createUser({ displayName, email, password });
           } else {
             //implement notice
             console.log("Input error");
@@ -80,7 +69,7 @@ function NewUserForm(props) {
         type="button"
         value="Cancel"
         onClick={(e) => {
-          onEscape();
+          onCancel();
         }}
       />
     </form>
