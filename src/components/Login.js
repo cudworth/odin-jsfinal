@@ -10,6 +10,13 @@ function Login(props) {
 
   const { auth } = props;
 
+  switch (state) {
+    case "register":
+      return renderRegistration();
+    default:
+      return renderLogin();
+  }
+
   function renderLogin() {
     return (
       <div className="Login">
@@ -32,13 +39,6 @@ function Login(props) {
 
   function renderRegistration() {
     return <NewUserForm auth={auth} onCancel={() => setState("")} />;
-  }
-
-  switch (state) {
-    case "register":
-      return renderRegistration();
-    default:
-      return renderLogin();
   }
 }
 
