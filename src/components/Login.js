@@ -1,14 +1,12 @@
 import "./Login.css";
-
 import { useState } from "react";
-
 import { NewUserForm } from "./Forms/NewUserForm";
 import { LoginForm } from "./Forms/LoginForm";
 
 function Login(props) {
   const [state, setState] = useState("");
 
-  const { auth } = props;
+  const { auth, onCancel } = props;
 
   switch (state) {
     case "register":
@@ -21,7 +19,7 @@ function Login(props) {
     return (
       <div className="Login">
         <div>
-          <LoginForm auth={auth} />
+          <LoginForm auth={auth} onCancel={onCancel} />
         </div>
         <div>
           <div>

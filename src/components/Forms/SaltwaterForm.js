@@ -1,5 +1,11 @@
 function SaltwaterForm(props) {
-  return <div className="saltwater-form"></div>;
+  const { auth, onEscape } = props;
+
+  return (
+    <div className="saltwater-form">
+      <input type="button" value="Cancel" onClick={onEscape} />
+    </div>
+  );
 }
 
 export { SaltwaterForm };

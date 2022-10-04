@@ -3,7 +3,7 @@ import "./LoginForm.css";
 import { useState } from "react";
 
 function LoginForm(props) {
-  const { auth } = props;
+  const { auth, onCancel } = props;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -34,7 +34,6 @@ function LoginForm(props) {
           />
         </label>
       </div>
-
       <input
         type="submit"
         value="Submit"
@@ -43,6 +42,7 @@ function LoginForm(props) {
           auth.signUserIn({ email, password });
         }}
       />
+      <input type="button" value="Cancel" onClick={onCancel} />
     </form>
   );
 }

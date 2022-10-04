@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { Navbar } from "./Navbar";
 import { Login } from "./Login";
 import { Profile } from "./Profile";
+import { Journal } from "./Journal";
 
 function Body(props) {
   const { auth, user, onError } = props;
@@ -20,11 +21,11 @@ function Body(props) {
   function render() {
     switch (state) {
       case "Login":
-        return <Login auth={auth} />;
+        return <Login auth={auth} onCancel={() => setState("")} />;
       case "Maps":
         return <div>Maps</div>;
       case "Journal":
-        return <div>Journal</div>;
+        return <Journal />;
       case "Profile":
         return <Profile user={user} />;
       default:
