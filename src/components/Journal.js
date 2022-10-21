@@ -2,6 +2,7 @@ import "./Journal.css";
 
 import { useState } from "react";
 import { JournalBrowser } from "./JournalBrowser";
+import { JournalEntryForm } from "./Forms/JournalEntryForm";
 import { SaltwaterForm } from "./Forms/SaltwaterForm";
 import { StillwaterForm } from "./Forms/StillwaterForm";
 import { StreamForm } from "./Forms/StreamForm";
@@ -12,11 +13,25 @@ function Journal(props) {
 
   switch (state) {
     case "saltwater":
-      return <SaltwaterForm auth={auth} onEscape={escape} />;
+      return (
+        <JournalEntryForm
+          auth={auth}
+          onEscape={escape}
+          formData={SaltwaterForm}
+        />
+      );
     case "stillwater":
-      return <StillwaterForm auth={auth} onEscape={escape} />;
+      return (
+        <JournalEntryForm
+          auth={auth}
+          onEscape={escape}
+          formData={StillwaterForm}
+        />
+      );
     case "stream":
-      return <StreamForm auth={auth} onEscape={escape} />;
+      return (
+        <JournalEntryForm auth={auth} onEscape={escape} formData={StreamForm} />
+      );
     default:
       return render();
   }
