@@ -1,4 +1,4 @@
-const StreamForm = {
+const FormData = {
   id: "saltwater_form",
   label: "Saltwater Report Form",
   className: "saltwater-form",
@@ -80,4 +80,4 @@ const StreamForm = {
   ],
 };
 
-export { StreamForm };
+export { FormData };

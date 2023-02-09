@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 
 const defaultState = {};
 
-function JournalEntryForm(props) {
-  const { auth, onEscape, formData } = props;
+function JournalForm(props) {
+  const { fb, onEscape, formData } = props;
 
   useEffect(() => {
     //Build default state based on form fields included
@@ -22,6 +22,15 @@ function JournalEntryForm(props) {
     <form key={id} className={className}>
       <h1>{label}</h1>
       {renderGroups(groups)}
+      <input
+        type="submit"
+        value="Submit"
+        onClick={(e) => {
+          e.preventDefault();
+          fb.addData(state);
+          onEscape();
+        }}
+      />{" "}
       <input type="button" value="Cancel" onClick={onEscape} />
     </form>
   );
@@ -61,4 +70,4 @@ function JournalEntryForm(props) {
   }
 }
 
-export { JournalEntryForm };
+export { JournalForm };

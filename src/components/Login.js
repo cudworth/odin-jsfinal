@@ -6,7 +6,7 @@ import { LoginForm } from "./Forms/LoginForm";
 function Login(props) {
   const [state, setState] = useState("");
 
-  const { auth, onCancel } = props;
+  const { fb, onCancel } = props;
 
   switch (state) {
     case "register":
@@ -19,7 +19,7 @@ function Login(props) {
     return (
       <div className="Login">
         <div>
-          <LoginForm auth={auth} onCancel={onCancel} />
+          <LoginForm fb={fb} onCancel={onCancel} />
         </div>
         <div>
           <div>
@@ -36,7 +36,7 @@ function Login(props) {
   }
 
   function renderRegistration() {
-    return <NewUserForm auth={auth} onCancel={() => setState("")} />;
+    return <NewUserForm fb={fb} onCancel={() => setState("")} />;
   }
 }
 

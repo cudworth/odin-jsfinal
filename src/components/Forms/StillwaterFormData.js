@@ -1,4 +1,4 @@
-const SaltwaterForm = {
+const FormData = {
   id: "saltwater_form",
   label: "Saltwater Report Form",
   className: "saltwater-form",
@@ -80,4 +80,4 @@ const SaltwaterForm = {
   ],
 };
 
-export { SaltwaterForm };
+export { FormData };

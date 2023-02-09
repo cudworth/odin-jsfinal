@@ -1,4 +1,4 @@
-// Import the functions you need from the SDKs you need
+// Import functions from SDKs
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "./firebase-key";
 
@@ -11,10 +11,20 @@ import {
   updateProfile,
 } from "firebase/auth";
 
-function firebaseAuth(props) {
+import {
+  getFirestore,
+  collection,
+  doc,
+  addDoc,
+  setDoc,
+  getDocs,
+} from "firebase/firestore";
+
+function Firebase(props) {
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
+  const db = getFirestore(app);
 
   function addAuthStateListener(fn) {
     onAuthStateChanged(auth, (user) => {
@@ -22,6 +32,7 @@ function firebaseAuth(props) {
     });
   }
 
+  // ###### AUTH METHODS ######
   function createUser(args) {
     const { email, password, displayName } = { ...args };
     createUserWithEmailAndPassword(auth, email, password)
@@ -61,12 +72,58 @@ function firebaseAuth(props) {
         console.log(error);
       });
   }
+
+  // ###### FIRESTORE METHODS #######
+  async function createDataUser() {
+    try {
+      const docRef = await addDoc(collection(db, "users"), {
+        first: "Ada",
+        last: "Lovelace",
+        born: 1815,
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  }
+
+  async function addData(data) {
+    try {
+      const userCollection = auth.currentUser.email;
+      const docRef = await addDoc(collection(db, userCollection), data);
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  }
+
+  async function setData(data, id) {
+    try {
+      const userCollection = auth.currentUser.email;
+      const docRef = await setDoc(doc(db, userCollection, id), data);
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  }
+
+  async function readData() {
+    const querySnapshot = await getDocs(collection(db, "users"));
+    querySnapshot.forEach((doc) => {
+      console.log(`${doc.id} => ${doc.data()}`);
+    });
+  }
+
   return {
     createUser,
     signUserIn,
     signUserOut,
     addAuthStateListener,
+    createDataUser,
+    addData,
+    setData,
+    readData,
   };
 }
 
-export { firebaseAuth };
+export { Firebase };

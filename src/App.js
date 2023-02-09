@@ -1,17 +1,17 @@
 import "./App.css";
 import { useState, useEffect } from "react";
-import { firebaseAuth } from "./firebaseAuth";
+import { Firebase } from "./firebase";
 import { Notice } from "./components/Notice";
 import { Body } from "./components/Body";
 
-const auth = firebaseAuth();
+const fb = Firebase();
 
 function App() {
   const [user, setUser] = useState(null);
   const [notice, setNotice] = useState(null);
 
   useEffect(() => {
-    auth.addAuthStateListener((user) => {
+    fb.addAuthStateListener((user) => {
       setUser(user ? user : null);
     });
   }, []);
@@ -19,7 +19,7 @@ function App() {
   return (
     <div className="App">
       <Notice message={notice} onClick={clearNotice} />
-      <Body auth={auth} user={user} onError={createNotice} />
+      <Body fb={fb} user={user} onError={createNotice} />
     </div>
   );
 

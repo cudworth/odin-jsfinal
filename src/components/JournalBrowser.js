@@ -1,7 +1,7 @@
 import "./JournalBrowser.css";
 
 function JournalBrowser(props) {
-  const { auth } = props;
-  return <div>Journal Browser</div>;
+  const { fb } = props;
+  return <div>Journal Browser Component</div>;
 }
 export { JournalBrowser };

@@ -2,35 +2,27 @@ import "./Journal.css";
 
 import { useState } from "react";
 import { JournalBrowser } from "./JournalBrowser";
-import { JournalEntryForm } from "./Forms/JournalEntryForm";
-import { SaltwaterForm } from "./Forms/SaltwaterForm";
-import { StillwaterForm } from "./Forms/StillwaterForm";
-import { StreamForm } from "./Forms/StreamForm";
+import { JournalForm } from "./Forms/JournalForm";
+import { FormData as SaltwaterFormData } from "./Forms/SaltwaterFormData";
+import { FormData as StillwaterFormData } from "./Forms/StillwaterFormData";
+import { FormData as StreamFormData } from "./Forms/StreamFormData";
 
 function Journal(props) {
-  const { auth } = props;
+  const { fb } = props;
   const [state, setState] = useState("");
 
   switch (state) {
     case "saltwater":
       return (
-        <JournalEntryForm
-          auth={auth}
-          onEscape={escape}
-          formData={SaltwaterForm}
-        />
+        <JournalForm fb={fb} onEscape={escape} formData={SaltwaterFormData} />
       );
     case "stillwater":
       return (
-        <JournalEntryForm
-          auth={auth}
-          onEscape={escape}
-          formData={StillwaterForm}
-        />
+        <JournalForm fb={fb} onEscape={escape} formData={StillwaterFormData} />
       );
     case "stream":
       return (
-        <JournalEntryForm auth={auth} onEscape={escape} formData={StreamForm} />
+        <JournalForm fb={fb} onEscape={escape} formData={StreamFormData} />
       );
     default:
       return render();

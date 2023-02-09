@@ -8,26 +8,26 @@ import { Profile } from "./Profile";
 import { Journal } from "./Journal";
 
 function Body(props) {
-  const { auth, user, onError } = props;
+  const { fb, user, onError } = props;
 
   const [state, setState] = useState("");
 
   useEffect(() => {
-    auth.addAuthStateListener((user) => {
+    fb.addAuthStateListener((user) => {
       setState(user ? "Profile" : "");
     });
-  }, [auth]);
+  }, [fb]);
 
   function render() {
     switch (state) {
       case "Login":
-        return <Login auth={auth} onCancel={() => setState("")} />;
+        return <Login fb={fb} onCancel={() => setState("")} />;
       case "Maps":
         return <div>Maps</div>;
       case "Journal":
-        return <Journal />;
+        return <Journal fb={fb} />;
       case "Profile":
-        return <Profile user={user} />;
+        return <Profile fb={fb} user={user} />;
       default:
         return <div>Welcome screen</div>;
     }
@@ -38,7 +38,7 @@ function Body(props) {
       <Navbar
         user={user}
         gotoSignIn={() => setState("Login")}
-        gotoSignOut={auth.signUserOut}
+        gotoSignOut={fb.signUserOut}
         gotoMaps={() => setState("Maps")}
         gotoJournal={() => setState("Journal")}
         gotoProfile={() => setState("Profile")}
