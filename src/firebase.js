@@ -26,6 +26,11 @@ function Firebase(props) {
   const auth = getAuth(app);
   const db = getFirestore(app);
 
+  let currentUser = null;
+  addAuthStateListener((user) => {
+    currentUser = user;
+  });
+
   function addAuthStateListener(fn) {
     onAuthStateChanged(auth, (user) => {
       fn(user);
@@ -87,24 +92,24 @@ function Firebase(props) {
     }
   }
 
-  async function addData(data) {
-    try {
-      const userCollection = auth.currentUser.email;
-      const docRef = await addDoc(collection(db, userCollection), data);
-      console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
+  function addData(_collection, data) {
+    return addDoc(collection(db, _collection), data)
+      .then((docRef) => {
+        console.log("Document written with ID: ", docRef.id);
+      })
+      .catch((e) => {
+        console.log("Error adding document: ", e);
+      });
   }
 
-  async function setData(data, id) {
-    try {
-      const userCollection = auth.currentUser.email;
-      const docRef = await setDoc(doc(db, userCollection, id), data);
-      console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
+  function setData(_collection, id, data) {
+    return setDoc(doc(db, _collection, id), data)
+      .then((docRef) => {
+        console.log("Document written with ID: ", docRef.id);
+      })
+      .catch((e) => {
+        console.log("Error adding document: ", e);
+      });
   }
 
   async function readData() {
@@ -112,6 +117,10 @@ function Firebase(props) {
     querySnapshot.forEach((doc) => {
       console.log(`${doc.id} => ${doc.data()}`);
     });
+  }
+
+  function getUser() {
+    return currentUser;
   }
 
   return {
@@ -123,6 +132,7 @@ function Firebase(props) {
     addData,
     setData,
     readData,
+    getUser,
   };
 }
 

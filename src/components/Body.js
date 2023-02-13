@@ -8,7 +8,7 @@ import { Profile } from "./Profile";
 import { Journal } from "./Journal";
 
 function Body(props) {
-  const { fb, user, onError } = props;
+  const { fb, onError } = props;
 
   const [state, setState] = useState("");
 
@@ -27,7 +27,7 @@ function Body(props) {
       case "Journal":
         return <Journal fb={fb} />;
       case "Profile":
-        return <Profile fb={fb} user={user} />;
+        return <Profile fb={fb} />;
       default:
         return <div>Welcome screen</div>;
     }
@@ -36,7 +36,7 @@ function Body(props) {
   return (
     <div className="Body">
       <Navbar
-        user={user}
+        fb={fb}
         gotoSignIn={() => setState("Login")}
         gotoSignOut={fb.signUserOut}
         gotoMaps={() => setState("Maps")}

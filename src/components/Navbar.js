@@ -1,8 +1,9 @@
 import "./Navbar.css";
 
 function Navbar(props) {
-  const { user, gotoSignIn, gotoSignOut, gotoMaps, gotoJournal, gotoProfile } =
+  const { fb, gotoSignIn, gotoSignOut, gotoMaps, gotoJournal, gotoProfile } =
     props;
+  const user = fb.getUser();
 
   const userInfo = user ? (
     <div>

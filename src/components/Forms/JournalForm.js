@@ -27,10 +27,13 @@ function JournalForm(props) {
         value="Submit"
         onClick={(e) => {
           e.preventDefault();
-          fb.addData(state);
+          fb.addData(
+            "purdy",
+            Object.assign({ uid: fb.getUser().uid, private: true }, state)
+          );
           onEscape();
         }}
-      />{" "}
+      />
       <input type="button" value="Cancel" onClick={onEscape} />
     </form>
   );
